@@ -62,9 +62,7 @@ pip install requests beautifulsoup4 urllib3
 ```bash
 git clone https://github.com/YoandisR/link-analyzer-pro.git
 cd link-analyzer-pro
-pip install requests beautifulsoup4 urllib3
-```
-
+pip install requests beautifulsoup4
 ---
 
 ## Uso
