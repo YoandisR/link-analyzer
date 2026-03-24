@@ -1,7 +1,7 @@
-# 🔗 Link Analyzer PRO v5.5
+# 🔗 Link Analyzer PRO v5.2
 
-**Herramienta profesional de crawling, mapeo jerárquico y auditoría de enlaces web.**  
-Desarrollada por **Yoandis Rodríguez** · [GitHub](https://github.com/YoandisR) · curvadigital0@gmail.com
+**Motor profesional de crawling, mapeo jerárquico y auditoría de enlaces web.**  
+Desarrollado por **Yoandis Rodríguez** · [GitHub](https://github.com/YoandisR) · curvadigital0@gmail.com
 
 ---
 
@@ -16,28 +16,29 @@ Opera en dos modos: una **interfaz web interactiva** con visualización de grafo
 ## Características principales
 
 ### Motor de crawling
-- Crawling recursivo con profundidad configurable por el usuario
+- Crawling recursivo con profundidad configurable
 - Pool de User-Agents con rotación automática en cada petición
-- Normalización y deduplicación de URLs mediante caché interna
+- Normalización y deduplicación de URLs mediante caché LRU
 - Filtrado inteligente de recursos no relevantes (imágenes, fuentes, scripts, etc.)
 - Verificación de estado HTTP con `ThreadPoolExecutor` (hasta 8 hilos concurrentes)
 - Clasificación de enlaces en internos y externos por dominio base
 
 ### Memoria persistente y reanudación
 - Checkpoint automático cada 10 URLs descubiertas (`linkanalyzer_session.json`)
-- Botón **REANUDAR** / comando `--resume` para continuar sesiones interrumpidas
-- Preserva opciones originales de la sesión (verificar, recursivo, profundidad)
-- Resumen de sesión guardada visible al iniciar
+- Botón **REANUDAR** en la interfaz web y opción equivalente en CLI
+- Preserva las opciones originales de la sesión: verificar, recursivo, profundidad
+- Muestra resumen de sesión guardada al iniciar
 
 ### Visualización y exportación
-- **Eje Central (Mapa Jerárquico):** grafo de fuerza dirigida integrado en la interfaz web
+- **Eje Central:** grafo de fuerza dirigida (D3.js) integrado en la interfaz web, con zoom, arrastre y agrupación por profundidad de ruta
 - Exportación a **JSON** con metadatos completos de la sesión
 - Exportación a **PDF** (reporte imprimible generado desde el navegador)
 - Exportación a **TXT** para procesamiento externo
 - Workspace organizado: `workspace/scans/` y `workspace/exports/`
 
-### Rendimiento
-- Probado con más de **61,000 URLs** en una sola sesión sin pérdida de estabilidad
+### Rendimiento comprobado
+- Más de **1,100,000 enlaces** procesados en sesión única
+- Más de **8,700 páginas** rastreadas sin interrupción
 - Velocidad sostenida superior a **23 URLs/segundo** en dispositivos móviles (Termux/Android)
 - Panel de métricas en tiempo real: páginas, enlaces, verificados, errores y velocidad
 
@@ -49,10 +50,10 @@ Opera en dos modos: una **interfaz web interactiva** con visualización de grafo
 - Librerías:
 
 ```bash
-pip install requests beautifulsoup4 urllib3 colorama flask
+pip install requests beautifulsoup4 urllib3
 ```
 
-> En Termux o sistemas con restricciones de entorno, añade `--break-system-packages`.
+> En Termux u otros entornos con restricciones, añade `--break-system-packages`.
 
 ---
 
@@ -61,7 +62,7 @@ pip install requests beautifulsoup4 urllib3 colorama flask
 ```bash
 git clone https://github.com/YoandisR/link-analyzer-pro.git
 cd link-analyzer-pro
-pip install requests beautifulsoup4 urllib3 colorama flask
+pip install requests beautifulsoup4 urllib3
 ```
 
 ---
@@ -71,22 +72,20 @@ pip install requests beautifulsoup4 urllib3 colorama flask
 ### Interfaz web (modo por defecto)
 
 ```bash
-python3 link_analyzer_v5.5.py
+python3 link_analyzer_v5.2.py
 ```
 
-Abre el navegador en `http://localhost:5000`. Desde la interfaz puedes:
-- Introducir la URL objetivo y configurar opciones
-- Iniciar, pausar o reanudar un escaneo
-- Ver el mapa jerárquico (Eje Central) en tiempo real
-- Exportar resultados en JSON o PDF
+Al ejecutar este comando, el servidor arranca y el navegador se abre automáticamente con la interfaz. Desde allí puedes introducir la URL objetivo, configurar las opciones y iniciar, pausar o reanudar el escaneo.
+
+En Termux, el navegador se lanza con `am start` directamente hacia la interfaz. En Linux de escritorio usa `xdg-open`.
 
 ### Modo CLI
 
 ```bash
-python3 link_analyzer_v5.5.py cli
+python3 link_analyzer_v5.2.py cli
 ```
 
-Muestra un panel de métricas en la terminal con actualizaciones en tiempo real: velocidad (U/s), páginas, enlaces y estado HTTP de cada URL procesada.
+Muestra un panel de métricas en la terminal con actualizaciones en tiempo real: velocidad (U/s), páginas, enlaces encontrados y estado HTTP de cada URL procesada.
 
 ---
 
@@ -94,57 +93,36 @@ Muestra un panel de métricas en la terminal con actualizaciones en tiempo real:
 
 ```
 link-analyzer-pro/
-├── link_analyzer_v5.5.py   # Script principal
-├── linkanalyzer_session.json  # Checkpoint de sesión (generado en tiempo de ejecución)
+├── link_analyzer_v5.2.py        # Script principal
+├── linkanalyzer_session.json    # Checkpoint de sesión (se genera en ejecución)
 └── workspace/
-    ├── scans/              # Resultados de escaneos
-    └── exports/            # Archivos exportados (JSON, PDF, TXT)
+    ├── scans/                   # Resultados de escaneos
+    └── exports/                 # Archivos exportados (JSON, PDF, TXT)
 ```
 
 ---
 
-## Opciones de configuración
+## Parámetros de configuración
 
-| Parámetro    | Descripción                                              | Valor por defecto |
-|--------------|----------------------------------------------------------|-------------------|
-| `url`        | URL objetivo del crawling                                | —                 |
-| `verificar`  | Verificar código de estado HTTP de cada enlace           | `false`           |
-| `recursivo`  | Seguir enlaces internos de forma recursiva               | `false`           |
-| `profundidad`| Profundidad máxima del crawling recursivo                | `1`               |
-| `resume`     | Reanudar desde el último checkpoint guardado             | `false`           |
+| Parámetro     | Descripción                                              | Por defecto |
+|---------------|----------------------------------------------------------|-------------|
+| `url`         | URL objetivo del crawling                                | —           |
+| `verificar`   | Verifica el código de estado HTTP de cada enlace         | `false`     |
+| `recursivo`   | Sigue enlaces internos de forma recursiva                | `false`     |
+| `profundidad` | Profundidad máxima del crawling recursivo                | `1`         |
+| `resume`      | Reanuda desde el último checkpoint guardado              | `false`     |
 
 ---
 
 ## Arquitectura interna
 
-| Componente        | Responsabilidad                                                  |
-|-------------------|------------------------------------------------------------------|
-| `PersistentMemory`| Lectura/escritura atómica del checkpoint JSON con bloqueo        |
-| `QuantumBus`      | Bus de eventos en memoria compartida entre hilos (logs, contadores, buffer de URLs) |
-| `LinkEngine`      | Motor principal: crawling, normalización, filtrado, verificación |
-| `WebHandler`      | Servidor HTTP integrado, API REST y HTML de la interfaz          |
-| `generar_mapa_jerarquico` | Construcción del árbol de nodos para el grafo de fuerza dirigida |
-
----
-
-## Capturas de métricas reales
-
-```
-Páginas mapeadas  : 4,300+
-Rutas detectadas  : 61,300+
-Velocidad media   : 23+ U/s  (Termux, Android)
-Estado de sesión  : checkpoint automático cada 10 URLs
-```
-
----
-
-## Exportación de datos
-
-**JSON** — Incluye metadatos de sesión, listas de enlaces internos y externos, estado HTTP y nivel de profundidad de cada URL.
-
-**PDF** — Reporte imprimible generado en el navegador con tabla completa de resultados.
-
-**TXT** — Lista plana de URLs para procesamiento externo o integración con otras herramientas.
+| Componente               | Responsabilidad                                                               |
+|--------------------------|-------------------------------------------------------------------------------|
+| `PersistentMemory`       | Lectura y escritura atómica del checkpoint JSON con bloqueo de hilo           |
+| `QuantumBus`             | Bus de eventos compartido entre hilos: logs, contadores y buffer de URLs      |
+| `LinkEngine`             | Motor principal: crawling, normalización, filtrado y verificación de enlaces  |
+| `WebHandler`             | Servidor HTTP integrado, API REST y HTML de la interfaz web                   |
+| `generar_mapa_jerarquico`| Construcción del árbol de nodos para el grafo de fuerza dirigida              |
 
 ---
 
@@ -159,3 +137,8 @@ MIT License — libre para uso personal y comercial con atribución.
 **Yoandis Rodríguez**  
 GitHub: [github.com/YoandisR](https://github.com/YoandisR)  
 Contacto: curvadigital0@gmail.com
+
+## Capturas de prueba
+
+![Vista central web](eje_central_web.jpg)
+![Evidencia en terminal](evidencia_potencia_cli.jpg)
