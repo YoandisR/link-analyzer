@@ -1,0 +1,23 @@
+============================================================
+  REPORTE FINAL — LINK ANALYZER PRO v5.2
+  by Yoandis Rodríguez
+============================================================
+  Fecha         : 2026-03-24 19:32:12
+  Fuente        : linkanalyzer_session.json
+  Target        : https://youtube.com
+
+  TOTALES
+  ├─ Links escaneados  : 1,233
+  ├─ Status 200 únicos : 819  (66.4%)
+  │    ├─ Internos     : 451
+  │    └─ Externos     : 368
+  ├─ Errores (4xx/5xx) : 411  (33.3%)
+  ├─ Redirecciones/2xx : 0  (0.0%)
+  └─ Sin status/timeout: 3
+
+  ARCHIVOS GENERADOS (workspace/exports/)
+  ├─ urls_200_limpias.txt
+  ├─ urls_200_internas.txt
+  └─ urls_200_externas.txt
+
+============================================================

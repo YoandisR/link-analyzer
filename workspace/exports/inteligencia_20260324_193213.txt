@@ -1,0 +1,232 @@
+======================================================================
+  REPORTE DE INTELIGENCIA — ANALIZADOR PRO v2.0
+  by Yoandis Rodríguez  |  github.com/YoandisR
+======================================================================
+  Fecha     : 2026-03-24 19:32:13
+  Fuente    : urls_200_limpias.txt
+  Total URLs: 819
+
+──────────────────────────────────────────────────────────────────────
+  RESUMEN EJECUTIVO
+──────────────────────────────────────────────────────────────────────
+  Alertas de patrones  : 124
+  Archivos expuestos   : 2
+  Dominios únicos      : 77
+  Subdominios          : 58
+
+──────────────────────────────────────────────────────────────────────
+  CAPA 1 · PATRONES SENSIBLES
+──────────────────────────────────────────────────────────────────────
+
+  [!!!] CRÍTICO — Paneles de administración (1 URLs)
+    https://myaccount.google.com/dashboard?hl=es
+
+  [!!] ALTO — Autenticación y credenciales (27 URLs)
+    https://youtube.com/ads/signup
+    https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp
+    https://accounts.google.com/ServiceLogin?passive=1209600&continue=https%3A%2F%2Fpolicies.google.com%2Fprivacy%3Fhl%3Des&followup=https%3A%2F%2Fpolicies.google.com%2Fprivacy%3Fhl%3Des&hl=es&ec=GAZAoQQ
+    https://blog.youtube/news-and-events/youtube-in-session
+    https://accounts.google.com/ServiceLogin?hl=es&passive=true&continue=http%3A%2F%2Fsupport.google.com%2Fyoutube%2Fanswer%2F2797370%3Fhl%3Des&ec=GAZAdQ
+    https://accounts.google.com/AddSession?hl=es-419&continue=https%3A%2F%2Fbusiness.google.com
+    https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fbusiness.google.com
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-signin-bgc%21o2
+    https://ads.google.com/signup?sourceid=awo&subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-hero-bgc%21o2
+    https://ads.google.com/signup?sourceid=awo&subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-end-bgc%21o2
+    https://policies.google.com/privacy?hl=es-419&authuser=0
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-flo-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-mid-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-flo-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-res-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-res-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-res-flo-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-creator-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-flo-bgc%21o2
+    https://accounts.google.com/ServiceLogin?hl=es&passive=true&continue=http%3A%2F%2Fsupport.google.com%2Fyoutube%2Fanswer%2F2620262%3Fhl%3Des&ec=GAZAdQ
+    https://accounts.google.com/ServiceLogin?hl=es&passive=true&continue=http%3A%2F%2Fsupport.google.com%2Fyoutube%2Fanswer%2F2807622%3Fhl%3Des&ec=GAZAdQ
+    https://accounts.google.com/ServiceLogin?hl=es&passive=true&continue=http%3A%2F%2Fsupport.google.com%2Fyoutube%2Ftopic%2F9223153%3Fhl%3Des&ec=GAZAdQ
+
+  [!] — Endpoints de API (6 URLs)
+    https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp
+    https://developers.google.com/youtube/terms/api-services-terms-of-service?hl=es-419
+    https://developers.google.com/youtube/terms/api-services-terms-of-service
+    https://developers.google.com/youtube/reporting/v1/code_samples?hl=es-419
+    https://github.com/youtube/api-samples
+    https://developers.google.com/apis-explorer
+
+  [!] — Parámetros potencialmente inyectables (19 URLs)
+    https://blog.youtube/search/?query=What+specific+tools+does+YouTube+offer+creators%3F
+    https://blog.youtube/search/?query=Neal+Mohan
+    https://blog.youtube/search/?query=What+are+the+latest+AI+features+on+YouTube%3F
+    https://blog.youtube/search/?query=Shopping&tags=Shopping
+    https://blog.youtube/search/?query=Creators&tags=Creators
+    https://blog.youtube/search/?query=Products+and+Features&tags=Products+and+Features
+    https://blog.youtube/search/?query=YouTube+News&tags=YouTube+News
+    https://blog.youtube/search/?query=Inside+YouTube&tags=Inside+YouTube
+    https://blog.youtube/search/?query=Artists&tags=Artists
+    https://blog.youtube/search/?query=Health&tags=Health
+    https://blog.youtube/search/?query=Learning+and+Education&tags=Learning+and+Education
+    https://blog.youtube/search/?query=Made+On+YouTube&tags=Made+On+YouTube
+    https://blog.youtube/search/?query=Policy&tags=Policy
+    https://blog.youtube/search/?query=Work+Diaries&tags=Work+Diaries
+    https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.kids
+    https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.unplugged&referrer=utm_source%3Dytv%26utm_medium%3Dfooter%26utm_campaign%3Dplay
+    https://issuetracker.google.com/issues?q=componentid%3A186600
+    https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.creator
+    https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fbusiness.google.com%2Fes-all%2Fresources%2Farticles%2Fabcds-of-effective-video-ads%2F&mini=true&title=El+ABCD+de+creaci%26oacute%3Bn+de+anuncios+de+video+eficaces+-+Publicidad+en+YouTube&summary=Nuestra+gu%26iacute%3Ba+del+ABCD+tiene+sugerencias+que+lo+ayudar%26aacute%3Bn+a+utilizar+las+pr%26aacute%3Bcticas+recomendadas+respaldadas+por+datos.+Siga+estos+cuatro+principios+para+crear+anuncios+de+video+eficaces.&source=Google+Business
+
+  [!] — Rutas de configuración/desarrollo (63 URLs)
+    https://developers.google.com/youtube
+    https://blog.youtube/search/?query=What+are+the+latest+AI+features+on+YouTube%3F
+    https://www.youtube.com/yt/dev
+    https://www.youtube.com/trends/records/?record=fastest-to-one-billion-views
+    https://tv.youtube.com/learn/devices
+    https://developers.google.com/youtube?hl=es-419
+    https://developers.google.com/youtube/documentation?hl=es-419
+    https://developers.google.com/youtube/code_samples?hl=es-419
+    https://developers.google.com/youtube/terms/api-services-terms-of-service?hl=es-419
+    https://developers.google.com/youtube/documentation
+    https://developers.google.com/youtube/code_samples
+    https://developers.google.com/youtube/terms/api-services-terms-of-service
+    https://developers.google.com/?hl=es-419
+    https://developers.google.com/products?hl=es-419
+    https://developers.google.com/youtube/iframe_api_reference?hl=es-419
+    https://developers.google.com/youtube/v3/guides/ios_youtube_helper?hl=es-419
+    https://developers.google.com/youtube/player_parameters?hl=es-419
+    https://developers.google.com/youtube/v3/getting-started?hl=es-419
+    https://developers.google.com/youtube/v3/docs?hl=es-419
+    https://developers.google.com/youtube/v3/code_samples?hl=es-419
+    https://developers.google.com/youtube/reporting?hl=es-419
+    https://developers.google.com/youtube/reporting/v1/code_samples?hl=es-419
+    https://developers.google.com/youtube/youtube_subscribe_button?hl=es-419
+    https://developers.google.com/youtube/v3/live/getting-started?hl=es-419
+    https://issuetracker.google.com/issues/new?component=186600&%3Btemplate=874803&hl=es-419
+    https://developers.google.com/apis-explorer
+    https://developers.google.com/youtube/youtube_player_demo
+    https://developers.google.com/youtube/youtube_subscribe_button
+    https://issuetracker.google.com/issues/new?component=186600&template=874803
+    https://developers.google.com/youtube/terms/developer-policies
+    https://developers.google.com/youtube/terms/required-minimum-functionality
+    https://developers.google.com/youtube/terms/branding-guidelines
+    https://developer.android.com?hl=es-419
+    https://developer.chrome.com/home?hl=es-419
+    https://ai.google.dev/?hl=es-419
+    https://developers.google.com/terms/site-terms?hl=es-419
+    https://ads.google.com/nav/selectaccount?dst=%2Faw%2Fcampaigns%2Fnew%2Fexpress&subid=%7Blocale%7D-%7Blang%7D-awhp-g-aw-%7Bdevice%7D-yt-sso-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-signin-bgc%21o2
+    https://ads.google.com/signup?sourceid=awo&subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-hero-bgc%21o2
+    https://ads.google.com/signup?sourceid=awo&subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-end-bgc%21o2
+    https://developers.google.com/google-ads/scripts/?hl=es-419
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-flo-bgc%21o2
+    https://ads.google.com/nav/selectaccount?dst=%2Faw%2Fcampaigns%2Fnew%2Fexpress&subid=%7Blocale%7D-%7Blang%7D-awhp-g-aw-%7Bdevice%7D-hiw-sso-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-mid-bgc%21o2
+    https://business.google.com/es-all/resources/articles/how-to-setup-google-ads-a-checklist
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-hiw-flo-bgc%21o2
+    https://ads.google.com/nav/selectaccount?dst=%2Faw%2Fcampaigns%2Fnew%2Fexpress&subid=%7Blocale%7D-%7Blang%7D-awhp-g-aw-%7Bdevice%7D-res-sso-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-res-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-res-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-res-flo-bgc%21o2
+    https://ads.google.com/nav/selectaccount?dst=%2Faw%2Fcampaigns%2Fnew%2Fexpress&subid=%7Blocale%7D-%7Blang%7D-awhp-g-aw-%7Bdevice%7D-yt-creator-sso-bgc%21o2
+    https://studio.youtube.com/channel/c/content/promotions?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-creator-primera-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-creator-signin-bgc%21o2
+    https://studio.youtube.com/channel/c/content/promotions?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-creator-hero-bgc%21o2
+    https://studio.youtube.com/channel/c/content/promotions?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-creator-end-bgc%21o2
+    https://studio.youtube.com/channel/c/content/promotions?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-creator-flo-bgc%21o2
+    https://ads.google.com/nav/selectaccount?dst=%2Faw%2Fcampaigns%2Fnew%2Fexpress&subid=%7Blocale%7D-%7Blang%7D-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-sso-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-top-bgc%21o2
+    https://ads.google.com/nav/login?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-signin-bgc%21o2
+    https://ads.google.com/signup?subid=all-es-419-awhp-g-aw-%7Bdevice%7D-yt-art_abcd-flo-bgc%21o2
+
+  [!] — Carga y descarga de archivos (8 URLs)
+    https://blog.youtube/news-and-events/youtube-premium-lite-background-play-downloads
+    https://kstatic.googleusercontent.com/files/84740fda380674f007957e04d8afa0852d05e5c30a3f57f0e89925d09dbf54ead7a856d8a0d635ed52e5a50444684b19cd1c0c1298c51c89b85001e4d408f918
+    https://kstatic.googleusercontent.com/files/06d96bea084274ecdbb92e9f10a666ed0e932b8bb60e8742395b0d584061b38a88a4100a20ee36000ec4988906bf31e173da2374cb26b3692027fc315b7efeae
+    https://kstatic.googleusercontent.com/files/5dc49b63d232bed635dad36bdbead5be936b91666b4d24f26e1bfce02bdf3ef5fa4fa7516b0af2d73fc962abaefaa39c8c17d97e1f445a292788f45291e31af9
+    https://kstatic.googleusercontent.com/files/a006bbb10e0dfd38a1c1ff77640feadbbb067f8c642b6a32b651622268aced0b85d0362d56db4eb594e8c1cb2d55057ccbe68e459176b4b51b0e5b4d7d141463
+    https://kstatic.googleusercontent.com/files/ed64a3c0c50e2c8b9db109c5b682c616347462fafd1c21d00f0d9fc99a8d16addc2c53ff189e23ceb1250c48a9897dbfa8481982c7e5dd8de26f39698c69b71f
+    https://kstatic.googleusercontent.com/files/199a0720c67812686a8b9e543bfcef992ebf97b54f7edc4bd2624fb416497b508d6d0b7393137a5030c412049181c88eb361bc6cc94c73eaf788c1a207879dc9
+    https://kstatic.googleusercontent.com/files/8c008b73566d01df66ef5e487b7feaf08b1bd3620171bed889d95ce13098920fd3dfc0817d7e9f330ef72aa3144c29c233d3c5f97ade838e948b2989c3fcdc51
+
+  TOP PARÁMETROS QUERY STRING:
+    ?hl= (117 ocurrencias)
+    ?subid= (25 ocurrencias)
+    ?v= (24 ocurrencias)
+    ?override_hl= (21 ocurrencias)
+    ?list= (16 ocurrencias)
+    ?query= (14 ocurrencias)
+    ?tags= (11 ocurrencias)
+    ?continue= (7 ocurrencias)
+    ?si= (6 ocurrencias)
+    ?passive= (5 ocurrencias)
+    ?ec= (5 ocurrencias)
+    ?dst= (5 ocurrencias)
+    ?u= (4 ocurrencias)
+    ?archive= (4 ocurrencias)
+    ?record= (4 ocurrencias)
+    ?loc= (4 ocurrencias)
+    ?id= (3 ocurrencias)
+    ?ref= (2 ocurrencias)
+    ?zipcode= (2 ocurrencias)
+    ?pli= (2 ocurrencias)
+
+──────────────────────────────────────────────────────────────────────
+  CAPA 2 · ARCHIVOS / RUTAS SENSIBLES
+──────────────────────────────────────────────────────────────────────
+
+  [i] CÓDIGO — Archivos de código expuestos
+    https://www.facebook.com/sharer/sharer.php?u=yt.be%2Fimpact
+    https://www.facebook.com/sharer.php?display=popup&u=https%3A%2F%2Fbusiness.google.com%2Fes-all%2Fresources%2Farticles%2Fabcds-of-effective-video-ads%2F
+
+──────────────────────────────────────────────────────────────────────
+  CAPA 3 · MAPEO DE DOMINIOS
+──────────────────────────────────────────────────────────────────────
+
+  TOP DOMINIOS:
+    www.youtube.com                            265 (32.4%)
+    tv.youtube.com                             159 (19.4%)
+    blog.youtube                                81 (9.9%)
+    business.google.com                         46 (5.6%)
+    developers.google.com                       28 (3.4%)
+    policies.google.com                         22 (2.7%)
+    myaccount.google.com                        22 (2.7%)
+    ads.google.com                              21 (2.6%)
+    artists.youtube                             19 (2.3%)
+    www.google.com                              17 (2.1%)
+    youtu.be                                    13 (1.6%)
+    accounts.google.com                         12 (1.5%)
+    studio.youtube.com                           8 (1.0%)
+    kstatic.googleusercontent.com                7 (0.9%)
+    youtube.com                                  6 (0.7%)
+    www.facebook.com                             4 (0.5%)
+    kids.youtube.com                             4 (0.5%)
+    transparencyreport.google.com                3 (0.4%)
+    families.google.com                          3 (0.4%)
+    takeout.google.com                           3 (0.4%)
+
+  DIRECTORIOS RAÍZ:
+    /browse                         123
+    /intl                           85
+    /es-all                         46
+    /t                              39
+    /news-and-events                31
+    /youtube                        27
+    /learn                          25
+    /watch                          24
+    /trends                         19
+    /howyoutubeworks                18
+    /playlist                       15
+    /search                         14
+    /c                              13
+    /about                          12
+    /channel                        12
+
+======================================================================
+  FIN DEL REPORTE
+======================================================================
