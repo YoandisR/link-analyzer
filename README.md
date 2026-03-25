@@ -17,14 +17,14 @@ Diseñado y probado en entornos móviles (**Termux / Android**) con rendimiento 
 
 ## Arquitectura del Sistema
 
-El proyecto se divide en tres capas funcionales independientes pero interconectadas:
+El proyecto se divide en cinco módulos funcionales independientes pero interconectados:
 
 | Componente | Archivo | Función |
 |---|---|---|
-| **Exploración Táctica** | `link_analyzer_v5_2.py` | Crawling, grafos, memoria persistente |
-| **Analizador Pro** | `analizador_pro.py` | Motor de análisis avanzado |
+| **Exploración Táctica** | `link_analyzer_v5.2.py` | Crawling, grafos, memoria persistente |
+| **Analizador Pro** | `analizador_pro.py` | Motor de análisis avanzado (patrones, seguridad, mapeo) |
 | **Filtro de Resultados** | `filtrar_200.py` | Filtra URLs status 200, elimina duplicados, exporta por categoría |
-| **Ejecución de Ataque** | `auto_attack.py` | Inyección SQLi, XSS, Path Traversal en tiempo real |
+| **Ejecución de Ataque** | `auto_attack.py` | Inyección SQLi, XSS, Path Traversal, SSTI, XXE, Open Redirect |
 | **Logística y Comando** | `report_manager.py` | Archivo .tar.gz, PDF ejecutivo, resumen táctico |
 
 ### Módulos internos del motor principal
@@ -54,7 +54,7 @@ El proyecto se divide en tres capas funcionales independientes pero interconecta
 | Errores 4xx/5xx detectados | **411 (33.3%)** |
 | Velocidad de crawling (Termux) | **23+ URLs/segundo** |
 
-**Sesiones de ataque (AUTO ATTACK):**
+**Sesiones de ataque (AUTO ATTACK v2.0 ELITE):**
 
 | Sesión | Pruebas | Tiempo | Velocidad | Vulnerables |
 |---|---|---|---|---|
@@ -71,7 +71,9 @@ El proyecto se divide en tres capas funcionales independientes pero interconecta
 | SQL Injection | **14.3%** (1 hit) |
 | Parámetro más vulnerable | `?subid` → 5 veces |
 | Segundo más vulnerable | `?hl` → 2 veces |
-| Top payload | `..\..\windows\system32\drivers\etc\ho...` |
+| Top payload | `..\..\windows\system32\drivers\etc\hosts` |
+
+---
 
 ## Interfaz Web — Vista en Tiempo Real
 
@@ -124,59 +126,156 @@ python3 link_analyzer_v5.2.py
 python3 link_analyzer_v5.2.py cli
 ```
 
-Funcionalidades clave:
+**Parámetros** (vía interfaz web o CLI):
 
-- Crawling multihilo con `ThreadPoolExecutor` y deduplicación `O(1)` por diccionario
+| Parámetro | Descripción | Default |
+|---|---|---|
+| `url` | Objetivo del crawling | — |
+| `verificar` | Verifica código HTTP de cada enlace | `false` |
+| `recursivo` | Sigue enlaces internos recursivamente | `false` |
+| `profundidad` | Profundidad máxima de rastreo | `1` |
+| `resume` | Reanuda desde último checkpoint | `false` |
+
+**Características:**
+- Crawling multihilo con `ThreadPoolExecutor` y deduplicación O(1)
 - Grafo de fuerza dirigida (D3.js v7) con zoom, arrastre y agrupación de nodos hoja
-- Checkpoint automático cada 500 URLs o 60 segundos — botón **REANUDAR** siempre visible
+- Checkpoint automático cada 500 URLs o 60 segundos — botón REANUDAR siempre visible
 - Limpieza automática de parámetros de tracking (`utm_`, `fbclid`, `gclid`, etc.)
-- Exportación en JSON, PDF y TXT al directorio `workspace/exports/`
-- Soporte de redirecciones, páginas grandes truncadas y sesiones persistentes entre reinicios
+- Exportación JSON, PDF y TXT a `workspace/exports/`
+- Soporte de redirecciones, páginas grandes truncadas y sesiones persistentes
+
+---
 
 ### B. Filtrado — FILTRAR 200
 
 ```bash
-# Paso obligatorio antes de auto_attack — genera las listas de URLs objetivo
+# Filtra URLs con status 200 desde la sesión guardada
 python3 filtrar_200.py
+
+# Opcional: usar un archivo JSON específico
+python3 filtrar_200.py workspace/scans/mi_escaneo.json
 ```
 
-Lee `linkanalyzer_session.json` y produce tres archivos en `workspace/exports/`:
+Genera en `workspace/exports/`:
 
-- `urls_200_limpias.txt` → todas las URLs con status 200 (819 en sesión YouTube)
-- `urls_200_internas.txt` → solo internas (451)
-- `urls_200_externas.txt` → solo externas (368)
+| Archivo | Contenido |
+|---|---|
+| `urls_200_limpias.txt` | Todas las URLs con status 200 |
+| `urls_200_internas.txt` | Solo URLs internas |
+| `urls_200_externas.txt` | Solo URLs externas |
+| `resumen_final.txt` | Estadísticas de la sesión |
 
-> **Nota:** `auto_attack.py --file mis_urls.txt` requiere ejecutar `filtrar_200.py` primero para generar el archivo de URLs.
+> ⚠️ `auto_attack.py` necesita este paso previo para obtener las listas limpias.
 
-### C. Ataque — AUTO ATTACK v1.1
+---
+
+### C. Ataque — AUTO ATTACK v2.0 ELITE
+
+Motor de inyección profesional con soporte para **6 categorías de vulnerabilidades**, detección de WAF, time-based SQLi, codificación de payloads, inyección en cabeceras y reportes HTML interactivos.
 
 ```bash
-python3 auto_attack.py                        # Escaneo completo
-python3 auto_attack.py --quick                # Solo 3 payloads por categoría
-python3 auto_attack.py --file mis_urls.txt    # Usar lista personalizada
+# Modo básico: detecta automáticamente todos los parámetros
+python3 auto_attack.py
+
+# Usar un archivo de URLs específico
+python3 auto_attack.py --file workspace/exports/urls_200_limpias.txt
+
+# Atacar solo parámetros específicos
+python3 auto_attack.py --params id,q,search
+
+# Usar múltiples métodos HTTP
+python3 auto_attack.py --methods GET,POST
+
+# Codificar payloads (url, double, base64, html)
+python3 auto_attack.py --encode url,double
+
+# Inyectar también en cabeceras HTTP
+python3 auto_attack.py --headers
+
+# Detectar WAF antes de atacar
+python3 auto_attack.py --waf-detect
+
+# Modo sigiloso (delays aleatorios 0.3–1.2s)
+python3 auto_attack.py --stealth
+
+# Modo agresivo (sin delays, máxima velocidad)
+python3 auto_attack.py --aggressive
+
+# Control de hilos y timeout
+python3 auto_attack.py --workers 16 --timeout 12
+
+# Prueba rápida (solo 3 payloads por categoría)
+python3 auto_attack.py --quick
+
+# Seleccionar categorías específicas
+python3 auto_attack.py --categories sqli,xss
+
+# Reportar solo HIGH o CRITICAL
+python3 auto_attack.py --severity high
+
+# Sin reporte HTML (solo TXT y JSON)
+python3 auto_attack.py --no-html
+
+# Desactivar deduplicación de URLs
+python3 auto_attack.py --no-dedup
+
+# Combinación típica para escaneo completo pero rápido
+python3 auto_attack.py --file workspace/exports/urls_200_limpias.txt --quick --workers 4
 ```
 
-Funcionalidades clave:
+**Flags disponibles:**
 
-- Payloads tácticos para **SQL Injection**, **XSS reflejado** y **Path Traversal (LFI)**
-- Detección de firmas de confirmación: `root:`, `sql syntax`, `<script>alert`, etc.
-- Biometría en tiempo real por consola con código de color (verde / rojo / amarillo)
-- Compatible con la salida JSON de Link Analyzer PRO como entrada directa
+| Flag | Descripción |
+|---|---|
+| `--file` | Archivo con URLs objetivo (default: `workspace/exports/urls_200_limpias.txt`) |
+| `--params` | Parámetros fijos separados por coma (ej: `id,q,search`) |
+| `--methods` | Métodos HTTP (GET, POST) — default: `GET` |
+| `--encode` | Codificaciones a aplicar a los payloads (`url`, `double`, `base64`, `html`) |
+| `--headers` | Inyectar payloads también en cabeceras HTTP (`X-Forwarded-For`, `Referer`, etc.) |
+| `--waf-detect` | Detectar WAF antes de iniciar las pruebas |
+| `--stealth` | Modo sigiloso con delays aleatorios (0.3–1.2s) entre requests |
+| `--aggressive` | Modo agresivo sin delays — máxima velocidad |
+| `--workers` | Número de hilos paralelos (default: `4`) |
+| `--timeout` | Timeout por request en segundos (default: `10`) |
+| `--quick` | Solo 3 payloads por categoría (prueba rápida) |
+| `--categories` | Categorías a probar: `sqli`, `xss`, `lfi`, `ssti`, `redirect`, `xxe` — default: todas |
+| `--severity` | Nivel mínimo de severidad a reportar (`critical`, `high`, `medium`, `info`, `all`) — default: `all` |
+| `--no-html` | No generar reporte HTML (solo TXT y JSON) |
+| `--no-dedup` | No deduplicar URLs (puede aumentar el número de pruebas) |
+
+**Salida generada:**
+
+| Archivo | Descripción |
+|---|---|
+| `attack_v2_YYYYMMDD_HHMMSS.txt` | Informe detallado en texto plano |
+| `attack_v2_YYYYMMDD_HHMMSS.json` | Datos completos en JSON |
+| `attack_v2_YYYYMMDD_HHMMSS.html` | Reporte interactivo con filtros (si no se usó `--no-html`) |
+
+---
 
 ### D. Informe — REPORT MANAGER v1.0
 
 ```bash
-python3 report_manager.py --archive    # Comprimir resultados antiguos en .tar.gz
-python3 report_manager.py --pdf        # Generar PDF con gráfica de barras (Matplotlib)
-python3 report_manager.py --summary    # Resumen táctico por categoría en terminal
-python3 report_manager.py --all        # Ejecutar las tres acciones en secuencia
+# Archivar resultados antiguos (mantiene solo los últimos 5 en exports/)
+python3 report_manager.py --archive
+
+# Generar PDF con gráfica de barras de vulnerabilidades
+python3 report_manager.py --pdf
+
+# Mostrar resumen táctico en terminal
+python3 report_manager.py --summary
+
+# Ejecutar las tres acciones en secuencia
+python3 report_manager.py --all
+
+# Usar un archivo JSON específico para PDF o resumen
+python3 report_manager.py --pdf --file workspace/exports/attack_v2_20260325_123456.json
 ```
 
-Funcionalidades clave:
-
-- Auto-archivo: mantiene solo los últimos 5 exports activos
-- PDF profesional con gráfica de distribución de vulnerabilidades
-- Resumen por categoría (SQLi, XSS, Path Traversal), parámetros más afectados y top payloads
+**Funcionalidades:**
+- Auto-archivo: comprime los resultados más antiguos en `.tar.gz` dentro de `workspace/archives/`
+- PDF profesional con gráfica de distribución de vulnerabilidades (requiere `matplotlib`)
+- Resumen por categoría, parámetros más afectados y top payloads
 
 ---
 
@@ -202,9 +301,9 @@ El servidor HTTP interno expone los siguientes endpoints:
 ```
 link-analyzer/
 ├── link_analyzer_v5.2.py      # Motor principal de crawling
-├── analizador_pro.py          # Motor de análisis avanzado
+├── analizador_pro.py          # Motor de análisis avanzado (patrones, seguridad, mapeo)
 ├── filtrar_200.py             # Filtrador de URLs status 200
-├── auto_attack.py             # Módulo de ataque (SQLi, XSS, LFI)
+├── auto_attack.py             # Módulo de ataque (SQLi, XSS, LFI, SSTI, XXE, Open Redirect)
 ├── report_manager.py          # Módulo de informes y archivo
 ├── linkanalyzer_session.json  # Sesión persistente (auto-generado)
 ├── LICENSE
@@ -212,13 +311,14 @@ link-analyzer/
 ├── eje_central_web.jpg        # Evidencia — interfaz web
 ├── evidencia_potencia_cli.jpg # Evidencia — modo CLI
 └── workspace/
-    ├── scans/                 # Resultados de sesiones
-    ├── exports/               # JSON, PDF, TXT, listas 200
+    ├── scans/                 # Resultados de sesiones (mapas jerárquicos)
+    ├── exports/               # JSON, PDF, TXT, listas 200, reportes de ataque
     │   ├── urls_200_limpias.txt
     │   ├── urls_200_internas.txt
     │   ├── urls_200_externas.txt
-    │   ├── attack_results_*.json
-    │   ├── attack_results_*.txt
+    │   ├── attack_v2_*.json
+    │   ├── attack_v2_*.txt
+    │   ├── attack_v2_*.html
     │   └── resumen_final.txt
     └── archives/              # .tar.gz de exports anteriores
 ```
@@ -229,7 +329,7 @@ link-analyzer/
 
 Esta herramienta fue creada para auditorías autorizadas, investigación de seguridad ofensiva y estudio técnico de infraestructuras web.
 
-> **Úsala exclusivamente en entornos donde tengas permiso explícito.**  
+> Úsala exclusivamente en entornos donde tengas permiso explícito.  
 > El autor no se responsabiliza por usos fuera de ese marco.
 
 ---
