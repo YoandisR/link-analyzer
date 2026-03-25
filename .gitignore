@@ -1,1 +1,5 @@
 __pycache__/
+linkanalyzer_session.json
+workspace/exports/*.txt
+workspace/exports/*.json
+workspace/exports/*.html
