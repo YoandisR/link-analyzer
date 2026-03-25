@@ -1621,9 +1621,61 @@ window.addEventListener('DOMContentLoaded',function(){
 # ==============================================================================
 # ENTRY POINT
 # ==============================================================================
+def show_help():
+    print(f"""
+{C.CYAN}{C.BOLD}╔════════════════════════════════════════════════════════════════╗
+║   🔗 LINK ANALYZER PRO v5.2 — AYUDA                           ║
+╚════════════════════════════════════════════════════════════════╝{C.END}
+
+{C.BOLD}USO:{C.END}
+  {C.GREEN}python3 link_analyzer_v5.2.py{C.END}           → Interfaz web (modo por defecto)
+  {C.GREEN}python3 link_analyzer_v5.2.py cli{C.END}       → Modo CLI en terminal
+  {C.GREEN}python3 link_analyzer_v5.2.py help{C.END}      → Muestra esta ayuda
+
+{C.BOLD}MODOS:{C.END}
+  {C.CYAN}[web]{C.END}  Lanza un servidor HTTP local en el puerto 5000 y abre el
+         navegador automáticamente. Desde la interfaz puedes configurar
+         la URL objetivo, profundidad, verificación y reanudar sesiones.
+
+  {C.CYAN}[cli]{C.END}  Panel de métricas en tiempo real directamente en la terminal.
+         Muestra velocidad (U/s), páginas, enlaces encontrados y
+         código de estado HTTP de cada URL procesada.
+
+{C.BOLD}PARÁMETROS DE CONFIGURACIÓN (interfaz web / CLI):{C.END}
+  {C.YELLOW}url{C.END}           URL objetivo del crawling
+  {C.YELLOW}verificar{C.END}     Verifica el código HTTP de cada enlace   (default: false)
+  {C.YELLOW}recursivo{C.END}     Sigue enlaces internos recursivamente     (default: false)
+  {C.YELLOW}profundidad{C.END}   Profundidad máxima del crawling           (default: 1)
+  {C.YELLOW}resume{C.END}        Reanuda desde el último checkpoint        (default: false)
+
+{C.BOLD}MEMORIA PERSISTENTE:{C.END}
+  Checkpoint automático cada {C.CYAN}10 URLs{C.END} descubiertas.
+  Archivo: {C.GRAY}linkanalyzer_session.json{C.END} (junto al script)
+  Workspace: {C.GRAY}workspace/scans/{C.END}   y   {C.GRAY}workspace/exports/{C.END}
+
+{C.BOLD}EXPORTACIÓN:{C.END}
+  {C.GREEN}JSON{C.END}   Metadatos completos de la sesión
+  {C.GREEN}TXT{C.END}    Lista de URLs para procesamiento externo
+  {C.GREEN}PDF{C.END}    Reporte imprimible generado desde el navegador
+
+{C.BOLD}REQUISITOS:{C.END}
+  pip install requests beautifulsoup4 urllib3 {C.GRAY}[--break-system-packages]{C.END}
+
+{C.BOLD}RENDIMIENTO COMPROBADO:{C.END}
+  {C.MAGENTA}>{C.END} 1,100,000 enlaces procesados en sesión única
+  {C.MAGENTA}>{C.END} 8,700 páginas rastreadas sin interrupción
+  {C.MAGENTA}>{C.END} 23 URLs/segundo en Termux/Android
+
+{C.BOLD}AUTOR:{C.END}
+  Yoandis Rodríguez · {C.BLUE}github.com/YoandisR{C.END} · curvadigital0@gmail.com
+""")
+
+
 if __name__ == '__main__':
     args = [a.lower() for a in sys.argv[1:]]
-    if 'cli' in args:
+    if 'help' in args or '--help' in args or '-h' in args:
+        show_help()
+    elif 'cli' in args:
         modo_cli()
     else:
         launch_ui(port=5000)
